@@ -14,10 +14,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-        $.get("http://christian.teknikprogrammet.org/json.php", function(data){
+        $.get("http://christian.teknikprogrammet.org/json2.php", function(data){
             var html = "<ul>";
             for(var i = 0; i < data.length; i++){
-                html+="<li>" + data[i].Player + " with the time "+ data[i].PlayedTime + " seconds</li>";
+                html+="<li>" + data[i].Player + " played the game " + data[i].Game + " with the time "+ data[i].PlayedTime + " seconds</li>";
             }
             $("#scores").html(html);
         });

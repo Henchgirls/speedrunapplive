@@ -9,7 +9,17 @@
     var isrunning = false;
     function timer(){
         timertime++;
-        document.getElementById('results').innerHTML=timertime;
+        if(timertime < 60){
+            document.getElementById('results').innerHTML=timertime;
+        }
+        else/* if(timertime < 3600)*/{
+            if((timertime-60*Math.floor(timertime/60))<10){
+                document.getElementById('results').innerHTML=Math.floor(timertime/60)+':0'+(timertime-60*Math.floor(timertime/60));
+            }
+            else{
+            document.getElementById('results').innerHTML=Math.floor(timertime/60)+':'+(timertime-60*Math.floor(timertime/60));
+            }
+        }
         isrunning = true;
     }
 </script>
