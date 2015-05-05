@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stuffs</title>
+</head>
+<body>
+<script>
+    var timertime = 0;
+    var isrunning = false;
+    function timer(){
+        timertime++;
+        document.getElementById('results').innerHTML=timertime;
+        isrunning = true;
+    }
+</script>
+<form>
+    <label>Name</label>
+    <input id="Player" type="input"/>
+    <br>
+    <label>Game</label>
+    <input id="Game" type="input"/>
+    <br>
+    <label>Time</label>
+    <p onclick="if(!isrunning){setInterval(function(){timer()}, 1000);}">Start</p>
+    <p id="results"></p>
+
+</form>
+<a id="knapp">Skicka</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#knapp").click(function(){
+            var Player = document.getElementById("Player").value;
+            alert(Player);
+            var Game = document.getElementById("Game").value;
+            alert(Game);
+            var Time  = document.getElementById("results").innerHTML;
+            alert(Time);
+            var json = '("Player":"'+Player+'","results":"'+Time+'")'
+            $.post("http://klas.teknikprogrammet.org/public_html/JSON.php",json,function(data){
+                alert("fungerar");
+            },"text")
+        });
+    });
+</script>
+</body>
+</html>
