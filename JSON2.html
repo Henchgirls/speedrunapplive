@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stuffs</title>
+    <title>Timer</title>
 </head>
 <body>
+<p><a href="http://klas.teknikprogrammet.org/JSON.html">HIGHSCORES/LOWTIMES</a></p>
 <script>
     var timertime = 0;
     var isrunning = false;
@@ -21,6 +22,7 @@
             }
         }
         isrunning = true;
+
     }
 </script>
 <form>
@@ -28,7 +30,9 @@
     <input id="Player" type="input"/>
     <br>
     <label>Game</label>
-    <input id="Game" type="input"/>
+    <select name="Game" id="Game">
+
+    </select>
     <br>
     <label>Time</label>
     <p onclick="if(!isrunning){setInterval(function(){timer()}, 1000);}">Start</p>
@@ -38,18 +42,38 @@
 <a id="knapp">Skicka</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
+    $.get("http://christian.teknikprogrammet.org/json2.php?GameList", function(data){
+        console.log(data);
+        var x = document.getElementById("Game");
+        var option;
+        for(var i = 0; i < data.length; i++){
+            option = document.createElement("option");
+            option.value = data[i].toString();
+            option.text = data[i].toString();
+            x.add(option);
+        }});
+</script>
+
+<script>
     $(document).ready(function(){
         $("#knapp").click(function(){
-            var Player = document.getElementById("Player").value;
-            alert(Player);
-            var Game = document.getElementById("Game").value;
-            alert(Game);
-            var Time  = document.getElementById("results").innerHTML;
-            alert(Time);
-            var json = '("Player":"'+Player+'","results":"'+Time+'")'
-            $.post("http://klas.teknikprogrammet.org/public_html/JSON.php",json,function(data){
-                alert("fungerar");
-            },"text")
+            var Player = document.getElementById("Player").value.toString();
+            console.log(Player)
+            var Games = document.getElementById("Game").value.toString();
+            console.log(Games)
+            var Time = timertime.toString();
+            console.log(Time)
+            //var jsonData = {"Game":Games,"Player":Player,"PlayerTime":Time};
+            var jsonData = '{"Game":"'+Games+'","Player":"'+Player+'","PlayerTime":"'+Time+'"}';
+
+            //alert(jsonData.Game);
+            if(!((Player==null)||(Time==null))){
+
+                $.when($.ajax($.post("http://christian.teknikprogrammet.org/json3.php",jsonData,function(data){
+                },"json"))).then(function () {
+                    window.location.replace('http://klas.teknikprogrammet.org/JSON.html');
+                });
+            };
         });
     });
 </script>
